@@ -3,6 +3,7 @@ import tamaguiConfig from "../../tamagui.config";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
+import { StatusBar as RNStatusBar } from "react-native";
 
 export default function Layout() {
   const [loaded] = useFonts({
@@ -16,9 +17,9 @@ export default function Layout() {
 
   return (
     <TamaguiProvider config={tamaguiConfig}>
-      <Theme name="dark">
+      <Theme name="light">
         <StatusBar style="dark" />
-        <YStack flex={1} bg="$background">
+        <YStack flex={1} bg="$background" pt={RNStatusBar.currentHeight}>
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen
