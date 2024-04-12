@@ -2,62 +2,68 @@ import { regex } from "@/utils/regex/regex";
 import { Eye, EyeOff, Lock, User } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { Button, Form, Input, Label, Text, XStack, YStack } from "tamagui";
+import { useForm, Controller } from "react-hook-form";
+import { Button, Form, Input, Text, XStack, YStack } from "tamagui";
+
+type FormData = {
+  email: string;
+  password: string;
+};
 
 export default function SignInForm() {
-  const [password, setPassword] = useState<string | undefined>();
-  const [isValidpassword, setIsValidPassword] = useState<boolean | string>(
-    "init"
-  );
-
-  const [email, setEmail] = useState<string | undefined>();
-  const [isValidEmail, setIsValidEmail] = useState<boolean | string>("init");
-
+  const [password, setPassword] = useState("");
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-  const validateEmail = () => {
-    if (email !== undefined)
-      regex.emailRegex.test(email)
-        ? setIsValidEmail(true)
-        : setIsValidEmail(false);
-  };
-  const validatePassword = () => {
-    if (password !== undefined)
-      regex.passwordRegex.test(password)
-        ? setIsValidPassword(true)
-        : setIsValidPassword(false);
-  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = () => {
-    validateEmail();
-    validatePassword();
-  };
+  const onSubmit = handleSubmit((data) => console.log(data));
 
   return (
-    <Form onSubmit={() => handleSubmit()}>
-      <YStack gap="$6" marginBottom="$9">
+    <Form onSubmit={() => onSubmit()}>
+      <YStack marginBottom="$9">
         <XStack ai="center" gap="$2.5">
           <User />
-          <YStack f={1} h="$5">
-            <Input
-              flex={1}
-              size="$5"
-              autoComplete="email"
-              placeholder={`Email`}
-              onChangeText={(text) => setEmail(text)}
-              style={
-                !isValidEmail
-                  ? {
-                      borderColor: "red",
-                    }
-                  : {}
-              }
+          <YStack f={1} h="$5" jc="flex-start">
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+                pattern: regex.emailRegex,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  flex={1}
+                  size="$5"
+                  autoComplete="email"
+                  placeholder={`Email`}
+                  onChangeText={onChange}
+                  value={value}
+                  onBlur={onBlur}
+                  style={
+                    errors.email
+                      ? {
+                          borderColor: "red",
+                        }
+                      : {}
+                  }
+                />
+              )}
+              name="email"
             />
           </YStack>
         </XStack>
         <YStack>
-          <XStack ai="center" gap="$2.5">
-            {password?.length ? (
+          <XStack ai="center" gap="$2.5" mt="$5">
+            {password.length ? (
               <>
                 {secureTextEntry ? (
                   <Eye
@@ -72,19 +78,33 @@ export default function SignInForm() {
             ) : (
               <Lock />
             )}
-            <Input
-              flex={1}
-              size="$5"
-              secureTextEntry={secureTextEntry}
-              placeholder={`Password`}
-              onChangeText={(text) => setPassword(text)}
-              style={
-                !isValidpassword
-                  ? {
-                      borderColor: "red",
-                    }
-                  : {}
-              }
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  flex={1}
+                  size="$5"
+                  placeholder={`Password`}
+                  onChangeText={(text) => {
+                    onChange(text);
+                    setPassword(text);
+                  }}
+                  secureTextEntry={secureTextEntry}
+                  value={value}
+                  onBlur={onBlur}
+                  style={
+                    errors.password
+                      ? {
+                          borderColor: "red",
+                        }
+                      : {}
+                  }
+                />
+              )}
+              name="password"
             />
           </XStack>
           <XStack jc="flex-end" mt="$2.5">
