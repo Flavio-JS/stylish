@@ -1,4 +1,4 @@
-import SignUpForm from "@/components/SignUpForm/SignUpForm";
+import SignUpForm from "@/components/Forms/SignUpForm/SignUpForm";
 import { Apple, Chrome, Facebook } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
 import { Button, H1, Text, XStack, YStack } from "tamagui";

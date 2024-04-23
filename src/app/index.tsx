@@ -1,4 +1,4 @@
-import SignInForm from "@/components/SignInForm/SignInForm";
+import SignInForm from "@/components/Forms/SignInForm/SignInForm";
 import { Chrome, Apple, Facebook } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
 import { Button, H1, Text, XStack, YStack } from "tamagui";
