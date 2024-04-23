@@ -22,6 +22,7 @@ export default function Layout() {
         <YStack flex={1} bg="$background" pt={RNStatusBar.currentHeight}>
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="sign-up" options={{ headerShown: false }} />
             <Stack.Screen
               name="(screens)"
               options={{

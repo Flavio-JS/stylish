@@ -1,20 +1,22 @@
 import { regex } from "@/utils/regex/regex";
 import { Eye, EyeOff, Lock, User } from "@tamagui/lucide-icons";
-import { Link } from "expo-router";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Form, Input, Text, XStack, YStack } from "tamagui";
-import { SignInFormData } from "./types";
+import PasswordCheck from "./components/PasswordCheck/PasswordCheck";
+import { SignUpFormData } from "./types";
 
-export default function SignInForm() {
+export default function SignUpForm() {
   const [password, setPassword] = useState("");
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [secureTextEntryPassword, setSecureTextEntryPassword] = useState(true);
+  const [secureTextEntryConfirm, setSecureTextEntryConfirm] = useState(true);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormData>({
+  } = useForm<SignUpFormData>({
     defaultValues: {
       email: "",
       password: "",
@@ -57,17 +59,21 @@ export default function SignInForm() {
             />
           </YStack>
         </XStack>
-        <YStack>
+        <YStack gap="$3">
           <XStack ai="center" gap="$2.5" mt="$5">
             {password.length ? (
               <>
-                {secureTextEntry ? (
+                {secureTextEntryPassword ? (
                   <Eye
-                    onTouchStart={() => setSecureTextEntry(!secureTextEntry)}
+                    onTouchStart={() =>
+                      setSecureTextEntryPassword(!secureTextEntryPassword)
+                    }
                   />
                 ) : (
                   <EyeOff
-                    onTouchStart={() => setSecureTextEntry(!secureTextEntry)}
+                    onTouchStart={() =>
+                      setSecureTextEntryPassword(!secureTextEntryPassword)
+                    }
                   />
                 )}
               </>
@@ -89,7 +95,7 @@ export default function SignInForm() {
                     onChange(text);
                     setPassword(text);
                   }}
-                  secureTextEntry={secureTextEntry}
+                  secureTextEntry={secureTextEntryPassword}
                   value={value}
                   onBlur={onBlur}
                   style={
@@ -103,12 +109,60 @@ export default function SignInForm() {
               )}
             />
           </XStack>
-          <XStack jc="flex-end" mt="$2.5">
-            <Link href="(screens)/firstScreen/">
-              <Text color="$red9">Forgot Password?</Text>
-            </Link>
-          </XStack>
+          <PasswordCheck password={password} />
         </YStack>
+
+        <XStack ai="center" gap="$2.5" mt="$5">
+          {confirmPassword.length ? (
+            <>
+              {secureTextEntryConfirm ? (
+                <Eye
+                  onTouchStart={() =>
+                    setSecureTextEntryConfirm(!secureTextEntryConfirm)
+                  }
+                />
+              ) : (
+                <EyeOff
+                  onTouchStart={() =>
+                    setSecureTextEntryConfirm(!secureTextEntryConfirm)
+                  }
+                />
+              )}
+            </>
+          ) : (
+            <Lock />
+          )}
+          <Controller
+            control={control}
+            name="confirmPassowrd"
+            rules={{
+              required: true,
+              pattern: regex.passwordRegex,
+              validate: (value, formValues) => value === formValues.password,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                flex={1}
+                size="$5"
+                placeholder={`Confirm Password`}
+                onChangeText={(text) => {
+                  onChange(text);
+                  setConfirmPassword(text);
+                }}
+                secureTextEntry={secureTextEntryConfirm}
+                value={value}
+                onBlur={onBlur}
+                style={
+                  errors.confirmPassowrd
+                    ? {
+                        borderColor: "red",
+                      }
+                    : {}
+                }
+              />
+            )}
+          />
+        </XStack>
       </YStack>
 
       <Form.Trigger asChild>
@@ -119,3 +173,9 @@ export default function SignInForm() {
     </Form>
   );
 }
+
+// Contém pelo menos uma letra minúscula
+// Contém pelo menos uma letra maiúscula
+// Contém pelo menos um número
+// Contém pelo menos um caractere especial
+// Tem pelo menos 5 caracteres
