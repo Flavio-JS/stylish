@@ -31,7 +31,7 @@ export default function PasswordCheck({ password }: PasswordCheckProps) {
   ];
 
   return (
-    <XStack jc="space-between" pl="$7">
+    <XStack jc="space-between" pl="$3" pr="$3">
       <YStack>
         {fields.slice(0, 3).map((requirement, index) => (
           <Text key={index} color={requirement.color}>

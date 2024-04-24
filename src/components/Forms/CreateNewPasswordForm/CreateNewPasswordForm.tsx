@@ -3,6 +3,7 @@ import { Eye, EyeOff, Lock, User } from "@tamagui/lucide-icons";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Form, Input, Text, XStack, YStack } from "tamagui";
+import InputIcon from "../Components/InputIcon/InpuIcon";
 import PasswordCheck from "../Components/PasswordCheck/PasswordCheck";
 import { CreateNewPasswordFormData } from "./types";
 
@@ -27,112 +28,63 @@ export default function CreateNewPasswordForm() {
 
   return (
     <Form onSubmit={() => onSubmit()}>
-      <YStack marginBottom="$9">
+      <YStack marginBottom="$9" gap="$3">
         <YStack gap="$3">
-          <XStack ai="center" gap="$2.5" mt="$5">
-            {newPassword.length ? (
-              <>
-                {secureTextEntryPassword ? (
-                  <Eye
-                    onTouchStart={() =>
-                      setSecureTextEntryPassword(!secureTextEntryPassword)
-                    }
-                  />
-                ) : (
-                  <EyeOff
-                    onTouchStart={() =>
-                      setSecureTextEntryPassword(!secureTextEntryPassword)
-                    }
-                  />
-                )}
-              </>
-            ) : (
-              <Lock />
-            )}
-            <Controller
-              control={control}
-              name="newPassword"
-              rules={{
-                required: true,
-                pattern: regex.passwordRegex,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Input
-                  flex={1}
-                  size="$5"
-                  placeholder={`New Password`}
-                  onChangeText={(text) => {
-                    onChange(text);
-                    setNewPassword(text);
-                  }}
-                  secureTextEntry={secureTextEntryPassword}
-                  value={value}
-                  onBlur={onBlur}
-                  style={
-                    errors.newPassword
-                      ? {
-                          borderColor: "red",
-                        }
-                      : {}
-                  }
-                />
-              )}
-            />
-          </XStack>
-          <PasswordCheck password={newPassword} />
-        </YStack>
-
-        <XStack ai="center" gap="$2.5" mt="$5">
-          {confirmNewPassword.length ? (
-            <>
-              {secureTextEntryConfirm ? (
-                <Eye
-                  onTouchStart={() =>
-                    setSecureTextEntryConfirm(!secureTextEntryConfirm)
-                  }
-                />
-              ) : (
-                <EyeOff
-                  onTouchStart={() =>
-                    setSecureTextEntryConfirm(!secureTextEntryConfirm)
-                  }
-                />
-              )}
-            </>
-          ) : (
-            <Lock />
-          )}
-          <Controller
+          <InputIcon
+            LeftIcon={Lock}
+            RightIcon={secureTextEntryPassword ? Eye : EyeOff}
+            inputName="newPassword"
             control={control}
-            name="confirmNewPassowrd"
+            placeholder="Password"
+            onChangeText={(text) => {
+              text && setNewPassword(text);
+            }}
             rules={{
               required: true,
               pattern: regex.passwordRegex,
-              validate: (value, formValues) => value === formValues.newPassword,
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                flex={1}
-                size="$5"
-                placeholder={`Confirm Password`}
-                onChangeText={(text) => {
-                  onChange(text);
-                  setConfirmNewPassword(text);
-                }}
-                secureTextEntry={secureTextEntryConfirm}
-                value={value}
-                onBlur={onBlur}
-                style={
-                  errors.confirmNewPassowrd
-                    ? {
-                        borderColor: "red",
-                      }
-                    : {}
-                }
-              />
-            )}
+            style={
+              errors.newPassword
+                ? {
+                    borderColor: "red",
+                  }
+                : {}
+            }
+            secureTextEntry={secureTextEntryPassword}
+            onTouchStartRIcon={() =>
+              setSecureTextEntryPassword(!secureTextEntryPassword)
+            }
           />
-        </XStack>
+
+          <PasswordCheck password={newPassword} />
+        </YStack>
+
+        <InputIcon
+          LeftIcon={Lock}
+          RightIcon={secureTextEntryConfirm ? Eye : EyeOff}
+          inputName="confirmNewPassowrd"
+          control={control}
+          placeholder="Confirm Password"
+          onChangeText={(text) => {
+            text && setConfirmNewPassword(text);
+          }}
+          rules={{
+            required: true,
+            pattern: regex.passwordRegex,
+            validate: (value, formValues) => value === formValues.newPassword,
+          }}
+          style={
+            errors.confirmNewPassowrd
+              ? {
+                  borderColor: "red",
+                }
+              : {}
+          }
+          secureTextEntry={secureTextEntryConfirm}
+          onTouchStartRIcon={() =>
+            setSecureTextEntryConfirm(!secureTextEntryConfirm)
+          }
+        />
       </YStack>
 
       <Form.Trigger asChild>

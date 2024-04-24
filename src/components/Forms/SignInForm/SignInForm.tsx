@@ -2,12 +2,12 @@ import { regex } from "@/utils/regex/regex";
 import { Eye, EyeOff, Lock, User } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { Button, Form, Input, Text, XStack, YStack } from "tamagui";
+import { useForm } from "react-hook-form";
+import { Button, Form, Text, XStack, YStack } from "tamagui";
+import InputIcon from "../Components/InputIcon/InpuIcon";
 import { SignInFormData } from "./types";
 
 export default function SignInForm() {
-  const [password, setPassword] = useState("");
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const {
@@ -25,84 +25,44 @@ export default function SignInForm() {
 
   return (
     <Form onSubmit={() => onSubmit()}>
-      <YStack marginBottom="$9">
-        <XStack ai="center" gap="$2.5">
-          <User />
-          <YStack f={1} h="$5" jc="flex-start">
-            <Controller
-              control={control}
-              name="email"
-              rules={{
-                required: true,
-                pattern: regex.emailRegex,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Input
-                  flex={1}
-                  size="$5"
-                  autoComplete="email"
-                  placeholder={`Email`}
-                  onChangeText={onChange}
-                  value={value}
-                  onBlur={onBlur}
-                  style={
-                    errors.email
-                      ? {
-                          borderColor: "red",
-                        }
-                      : {}
-                  }
-                />
-              )}
-            />
-          </YStack>
-        </XStack>
+      <YStack marginBottom="$9" gap="$6">
+        <InputIcon
+          LeftIcon={User}
+          inputName="email"
+          control={control}
+          placeholder="Email"
+          rules={{
+            required: true,
+            pattern: regex.emailRegex,
+          }}
+          style={
+            errors.email
+              ? {
+                  borderColor: "red",
+                }
+              : {}
+          }
+        />
         <YStack>
-          <XStack ai="center" gap="$2.5" mt="$5">
-            {password.length ? (
-              <>
-                {secureTextEntry ? (
-                  <Eye
-                    onTouchStart={() => setSecureTextEntry(!secureTextEntry)}
-                  />
-                ) : (
-                  <EyeOff
-                    onTouchStart={() => setSecureTextEntry(!secureTextEntry)}
-                  />
-                )}
-              </>
-            ) : (
-              <Lock />
-            )}
-            <Controller
-              control={control}
-              name="password"
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Input
-                  flex={1}
-                  size="$5"
-                  placeholder={`Password`}
-                  onChangeText={(text) => {
-                    onChange(text);
-                    setPassword(text);
-                  }}
-                  secureTextEntry={secureTextEntry}
-                  value={value}
-                  onBlur={onBlur}
-                  style={
-                    errors.password
-                      ? {
-                          borderColor: "red",
-                        }
-                      : {}
+          <InputIcon
+            LeftIcon={Lock}
+            RightIcon={secureTextEntry ? Eye : EyeOff}
+            inputName="password"
+            control={control}
+            placeholder="Password"
+            rules={{
+              required: true,
+            }}
+            style={
+              errors.password
+                ? {
+                    borderColor: "red",
                   }
-                />
-              )}
-            />
-          </XStack>
+                : {}
+            }
+            secureTextEntry={secureTextEntry}
+            onTouchStartRIcon={() => setSecureTextEntry(!secureTextEntry)}
+          />
           <XStack jc="flex-end" mt="$2.5">
             <Link href="/forgot-password">
               <Text color="$red9">Forgot Password?</Text>

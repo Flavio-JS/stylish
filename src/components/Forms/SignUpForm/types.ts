@@ -6,5 +6,5 @@ export type FieldProp = {
 export type SignUpFormData = {
   email: string;
   password: string;
-  confirmPassowrd: string;
+  confirmPassword: string;
 };
