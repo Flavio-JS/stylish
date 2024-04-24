@@ -4,11 +4,11 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Form, Input, Text, XStack, YStack } from "tamagui";
 import PasswordCheck from "../Components/PasswordCheck/PasswordCheck";
-import { SignUpFormData } from "./types";
+import { CreateNewPasswordFormData } from "./types";
 
-export default function SignUpForm() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+export default function CreateNewPasswordForm() {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [secureTextEntryPassword, setSecureTextEntryPassword] = useState(true);
   const [secureTextEntryConfirm, setSecureTextEntryConfirm] = useState(true);
 
@@ -16,10 +16,10 @@ export default function SignUpForm() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormData>({
+  } = useForm<CreateNewPasswordFormData>({
     defaultValues: {
-      email: "",
-      password: "",
+      newPassword: "",
+      confirmNewPassowrd: "",
     },
   });
 
@@ -28,40 +28,9 @@ export default function SignUpForm() {
   return (
     <Form onSubmit={() => onSubmit()}>
       <YStack marginBottom="$9">
-        <XStack ai="center" gap="$2.5">
-          <User />
-          <YStack f={1} h="$5" jc="flex-start">
-            <Controller
-              control={control}
-              name="email"
-              rules={{
-                required: true,
-                pattern: regex.emailRegex,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Input
-                  flex={1}
-                  size="$5"
-                  autoComplete="email"
-                  placeholder={`Email`}
-                  onChangeText={onChange}
-                  value={value}
-                  onBlur={onBlur}
-                  style={
-                    errors.email
-                      ? {
-                          borderColor: "red",
-                        }
-                      : {}
-                  }
-                />
-              )}
-            />
-          </YStack>
-        </XStack>
         <YStack gap="$3">
           <XStack ai="center" gap="$2.5" mt="$5">
-            {password.length ? (
+            {newPassword.length ? (
               <>
                 {secureTextEntryPassword ? (
                   <Eye
@@ -82,24 +51,25 @@ export default function SignUpForm() {
             )}
             <Controller
               control={control}
-              name="password"
+              name="newPassword"
               rules={{
                 required: true,
+                pattern: regex.passwordRegex,
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   flex={1}
                   size="$5"
-                  placeholder={`Password`}
+                  placeholder={`New Password`}
                   onChangeText={(text) => {
                     onChange(text);
-                    setPassword(text);
+                    setNewPassword(text);
                   }}
                   secureTextEntry={secureTextEntryPassword}
                   value={value}
                   onBlur={onBlur}
                   style={
-                    errors.password
+                    errors.newPassword
                       ? {
                           borderColor: "red",
                         }
@@ -109,11 +79,11 @@ export default function SignUpForm() {
               )}
             />
           </XStack>
-          <PasswordCheck password={password} />
+          <PasswordCheck password={newPassword} />
         </YStack>
 
         <XStack ai="center" gap="$2.5" mt="$5">
-          {confirmPassword.length ? (
+          {confirmNewPassword.length ? (
             <>
               {secureTextEntryConfirm ? (
                 <Eye
@@ -134,11 +104,11 @@ export default function SignUpForm() {
           )}
           <Controller
             control={control}
-            name="confirmPassowrd"
+            name="confirmNewPassowrd"
             rules={{
               required: true,
               pattern: regex.passwordRegex,
-              validate: (value, formValues) => value === formValues.password,
+              validate: (value, formValues) => value === formValues.newPassword,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
@@ -147,13 +117,13 @@ export default function SignUpForm() {
                 placeholder={`Confirm Password`}
                 onChangeText={(text) => {
                   onChange(text);
-                  setConfirmPassword(text);
+                  setConfirmNewPassword(text);
                 }}
                 secureTextEntry={secureTextEntryConfirm}
                 value={value}
                 onBlur={onBlur}
                 style={
-                  errors.confirmPassowrd
+                  errors.confirmNewPassowrd
                     ? {
                         borderColor: "red",
                       }
@@ -167,7 +137,7 @@ export default function SignUpForm() {
 
       <Form.Trigger asChild>
         <Button backgroundColor="$red9">
-          <Text color="white">Create Account</Text>
+          <Text color="white">Change Password</Text>
         </Button>
       </Form.Trigger>
     </Form>

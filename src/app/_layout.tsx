@@ -33,6 +33,12 @@ export default function Layout() {
               }}
             />
             <Stack.Screen
+              name="create-new-password"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
               name="(screens)"
               options={{
                 title: "Screens",

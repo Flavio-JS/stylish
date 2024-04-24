@@ -1,6 +1,6 @@
 import { regex } from "@/utils/regex/regex";
 import { Text, XStack, YStack } from "tamagui";
-import { FieldProp } from "../types";
+import { FieldProp } from "../../SignUpForm/types";
 
 type PasswordCheckProps = {
   password: string;
