@@ -1,3 +1,4 @@
+import BackPage from "@/components/BackPage/BackPage";
 import SignUpForm from "@/components/Forms/SignUpForm/SignUpForm";
 import { Apple, Chrome, Facebook } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
@@ -7,6 +8,7 @@ export default function SignInPage() {
   return (
     <YStack flex={1} py="$4.5" px="$6" gap="$6" backgroundColor="$background">
       <YStack>
+        <BackPage href="/" />
         <H1>Create an</H1>
         <H1>account</H1>
       </YStack>

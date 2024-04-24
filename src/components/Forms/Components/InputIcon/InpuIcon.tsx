@@ -2,14 +2,12 @@ import {
   Control,
   Controller,
   FieldValues,
-  Noop,
   RegisterOptions,
 } from "react-hook-form";
 import {
   GestureResponderEvent,
   StyleProp,
   StyleSheet,
-  TextInput,
   TextStyle,
 } from "react-native";
 import { Input, XStack, YStack } from "tamagui";
@@ -57,7 +55,7 @@ export default function InputIcon({
 
   return (
     <XStack ai="center" gap="$2.5">
-      <XStack style={styles.userContainer}>
+      <XStack style={styles.iconContainer}>
         {LeftIcon && (
           <LeftIcon style={styles.LeftIcon} onTouchStart={onTouchStartLIcon} />
         )}
@@ -82,7 +80,7 @@ export default function InputIcon({
           )}
         />
       </YStack>
-      <XStack style={styles.userContainer}>
+      <XStack style={styles.iconContainer}>
         {RightIcon && (
           <RightIcon
             style={styles.RightIcon}
@@ -95,7 +93,7 @@ export default function InputIcon({
 }
 
 const styles = StyleSheet.create({
-  userContainer: {
+  iconContainer: {
     position: "relative",
   },
   LeftIcon: {
