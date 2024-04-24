@@ -4,6 +4,8 @@ import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
 import { StatusBar as RNStatusBar } from "react-native";
+import { ChangeTheme } from "@/components/ChangeTheme/ChangeTheme";
+import { useState } from "react";
 
 export default function Layout() {
   const [loaded] = useFonts({
@@ -11,15 +13,23 @@ export default function Layout() {
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
   if (!loaded) {
     return null;
   }
 
   return (
     <TamaguiProvider config={tamaguiConfig}>
-      <Theme name="light">
-        <StatusBar style="dark" />
-        <YStack flex={1} bg="$background" pt={RNStatusBar.currentHeight}>
+      <Theme name={isDarkTheme ? "dark" : "light"}>
+        <StatusBar style={isDarkTheme ? "light" : "dark"} />
+        <YStack
+          flex={1}
+          bg="$background"
+          pt={RNStatusBar.currentHeight}
+          position="relative"
+        >
+          <ChangeTheme onCheckedChange={setIsDarkTheme} />
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen

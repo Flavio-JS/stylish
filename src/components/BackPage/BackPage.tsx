@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   IconContainer: {
     position: "absolute",
     zIndex: 2,
-    left: -25,
+    left: -27,
     top: 15,
   },
 });
