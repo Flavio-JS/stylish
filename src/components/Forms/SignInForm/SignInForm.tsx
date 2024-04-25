@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Form, Text, XStack, YStack } from "tamagui";
 import InputIcon from "../Components/InputIcon/InpuIcon";
+import { router } from "expo-router";
 import { SignInFormData } from "./types";
 
 export default function SignInForm() {
@@ -21,7 +22,13 @@ export default function SignInForm() {
     },
   });
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => {
+    const { email, password } = data;
+    if (email === "teste@teste.com" && password === "Teste1@")
+      router.push("/(screens)/homeScreen/");
+
+    console.log(data);
+  });
 
   return (
     <Form onSubmit={() => onSubmit()}>
@@ -64,7 +71,8 @@ export default function SignInForm() {
             onTouchStartRIcon={() => setSecureTextEntry(!secureTextEntry)}
           />
           <XStack jc="flex-end" mt="$2.5">
-            <Link href="/forgot-password">
+            {/* <Link href="/forgot-password"> */}
+            <Link href="/create-new-password">
               <Text color="$red9">Forgot Password?</Text>
             </Link>
           </XStack>

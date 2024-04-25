@@ -1,9 +1,9 @@
 import { Text, YStack } from "tamagui";
 
-export default function FirstScreen() {
+export default function TrendingScreenComponent() {
   return (
     <YStack f={1} jc="center" ai="center" bg="$background">
-      <Text>FirstScreen</Text>
+      <Text>TrendingScreen</Text>
     </YStack>
   );
 }

@@ -1,4 +1,4 @@
-import { Drama, Drill, User } from "@tamagui/lucide-icons";
+import { Home, ShoppingCart, Sparkles, User } from "@tamagui/lucide-icons";
 import { Tabs } from "expo-router";
 import { XStack, useTheme } from "tamagui";
 
@@ -13,28 +13,35 @@ export default function Layout() {
           shadowColor: "transparent",
         },
         tabBarBackground: () => <XStack f={1} backgroundColor="$background" />,
-        tabBarActiveTintColor: theme.accentColor.val,
+        tabBarActiveTintColor: theme.red11.val,
       }}
     >
       <Tabs.Screen
-        name="firstScreen/index"
+        name="homeScreen/index"
         options={{
-          title: "firstScreen",
-          tabBarIcon: () => <Drama />,
+          title: "Home",
+          tabBarIcon: ({ color }) => <Home color={color} />,
         }}
       />
       <Tabs.Screen
-        name="secondScreen/index"
+        name="trendingScreen/index"
         options={{
-          title: "secondScreen",
-          tabBarIcon: () => <Drill />,
+          title: "Trending",
+          tabBarIcon: ({ color }) => <Sparkles color={color} />,
         }}
       />
       <Tabs.Screen
-        name="user/index"
+        name="shopScreen/index"
+        options={{
+          title: "Shop",
+          tabBarIcon: ({ color }) => <ShoppingCart color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profileScreen/index"
         options={{
           title: "User",
-          tabBarIcon: () => <User />,
+          tabBarIcon: ({ color }) => <User color={color} />,
         }}
       />
     </Tabs>

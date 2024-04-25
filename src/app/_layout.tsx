@@ -29,7 +29,10 @@ export default function Layout() {
           pt={RNStatusBar.currentHeight}
           position="relative"
         >
-          <ChangeTheme onCheckedChange={setIsDarkTheme} />
+          <ChangeTheme
+            isDarkTheme={isDarkTheme}
+            onClick={() => setIsDarkTheme(!isDarkTheme)}
+          />
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen
@@ -52,7 +55,7 @@ export default function Layout() {
               name="(screens)"
               options={{
                 title: "Screens",
-                headerShown: true,
+                headerShown: false,
               }}
             />
           </Stack>

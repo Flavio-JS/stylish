@@ -1,25 +1,20 @@
-import { ArrowLeft } from "@tamagui/lucide-icons";
-import { Link } from "expo-router";
-import { Href } from "expo-router/build/link/href";
-import { StyleSheet } from "react-native";
+import { ArrowLeft, LogOut } from "@tamagui/lucide-icons";
+import { router } from "expo-router";
+import { BackHandler } from "react-native";
+import { View } from "tamagui";
 
-export type BackPageProps = {
-  href: Href;
-};
+export default function BackPage() {
+  const handleTouch = () => {
+    router.canGoBack() ? router.back() : BackHandler.exitApp();
+  };
 
-export default function BackPage({ href }: BackPageProps) {
   return (
-    <Link href={href} style={styles.IconContainer}>
-      <ArrowLeft />
-    </Link>
+    <View position="absolute" zIndex={2} left={-27} top={15}>
+      {router.canGoBack() ? (
+        <ArrowLeft onTouchStart={handleTouch} />
+      ) : (
+        <LogOut rotateY={`180deg`} onTouchStart={handleTouch} />
+      )}
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  IconContainer: {
-    position: "absolute",
-    zIndex: 2,
-    left: -27,
-    top: 15,
-  },
-});

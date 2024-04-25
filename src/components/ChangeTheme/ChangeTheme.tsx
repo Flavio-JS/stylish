@@ -1,7 +1,12 @@
-import { Switch, SwitchProps, XStack } from "tamagui";
+import { XStack } from "tamagui";
 import { Sun, Moon } from "@tamagui/lucide-icons";
 
-export const ChangeTheme = ({ ...rest }: SwitchProps) => {
+export type ChangeThemeProps = {
+  isDarkTheme: boolean;
+  onClick: () => void;
+};
+
+export const ChangeTheme = ({ isDarkTheme, onClick }: ChangeThemeProps) => {
   return (
     <XStack
       ai="center"
@@ -11,11 +16,11 @@ export const ChangeTheme = ({ ...rest }: SwitchProps) => {
       top="$11"
       zIndex={2}
     >
-      <Sun size="$3.5" />
-      <Switch size="$3.5" bg="$gray6" {...rest}>
-        <Switch.Thumb animation="tooltip" />
-      </Switch>
-      <Moon size="$3.5" />
+      {isDarkTheme ? (
+        <Sun onTouchStart={onClick} />
+      ) : (
+        <Moon onTouchStart={onClick} />
+      )}
     </XStack>
   );
 };
