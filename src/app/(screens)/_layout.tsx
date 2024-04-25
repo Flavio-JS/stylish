@@ -12,8 +12,8 @@ export default function Layout() {
         tabBarStyle: {
           shadowColor: "transparent",
         },
-        tabBarBackground: () => <XStack f={1} backgroundColor="$background" />,
         tabBarActiveTintColor: theme.red11.val,
+        tabBarBackground: () => <XStack f={1} backgroundColor="$background" />,
       }}
     >
       <Tabs.Screen

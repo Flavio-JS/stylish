@@ -1,15 +1,14 @@
 import { regex } from "@/utils/regex/regex";
 import { Eye, EyeOff, Lock, User } from "@tamagui/lucide-icons";
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { Button, Form, Input, Text, XStack, YStack } from "tamagui";
+import { useForm } from "react-hook-form";
+import { Button, Form, Text, YStack } from "tamagui";
 import InputIcon from "../Components/InputIcon/InpuIcon";
 import PasswordCheck from "../Components/PasswordCheck/PasswordCheck";
 import { CreateNewPasswordFormData } from "./types";
 
 export default function CreateNewPasswordForm() {
   const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [secureTextEntryPassword, setSecureTextEntryPassword] = useState(true);
   const [secureTextEntryConfirm, setSecureTextEntryConfirm] = useState(true);
 
@@ -65,9 +64,6 @@ export default function CreateNewPasswordForm() {
           inputName="confirmNewPassowrd"
           control={control}
           placeholder="Confirm Password"
-          onChangeText={(text) => {
-            text && setConfirmNewPassword(text);
-          }}
           rules={{
             required: true,
             pattern: regex.passwordRegex,
