@@ -1,6 +1,6 @@
-import { Home, ShoppingCart, Sparkles, User } from "@tamagui/lucide-icons";
+import { Flame, Home, ShoppingCart, User } from "@tamagui/lucide-icons";
 import { Tabs } from "expo-router";
-import { XStack, useTheme } from "tamagui";
+import { useTheme } from "tamagui";
 
 export default function Layout() {
   const theme = useTheme();
@@ -9,39 +9,61 @@ export default function Layout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        tabBarShowLabel: false,
         tabBarStyle: {
+          position: "absolute",
           shadowColor: "transparent",
+          backgroundColor: theme.background.val,
         },
         tabBarActiveTintColor: theme.red11.val,
-        tabBarBackground: () => <XStack f={1} backgroundColor="$background" />,
       }}
     >
       <Tabs.Screen
         name="homeScreen/index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => <Home color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Home
+              color={color}
+              top={focused ? -15 : 0}
+              size={focused ? size * 1.5 : size}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="trendingScreen/index"
         options={{
-          title: "Trending",
-          tabBarIcon: ({ color }) => <Sparkles color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Flame
+              color={color}
+              top={focused ? -15 : 0}
+              size={focused ? size * 1.5 : size}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="shopScreen/index"
         options={{
-          title: "Shop",
-          tabBarIcon: ({ color }) => <ShoppingCart color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <ShoppingCart
+              color={color}
+              top={focused ? -15 : 0}
+              size={focused ? size * 1.5 : size}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="profileScreen/index"
         options={{
-          title: "User",
-          tabBarIcon: ({ color }) => <User color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <User
+              color={color}
+              top={focused ? -15 : 0}
+              size={focused ? size * 1.5 : size}
+            />
+          ),
         }}
       />
     </Tabs>
